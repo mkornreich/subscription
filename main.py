@@ -5,6 +5,7 @@ from scheduler import start_schedule, start_schedules
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['POST'])
 def handle_post():
     if request.method == 'POST':
@@ -17,6 +18,7 @@ def handle_post():
         start_schedule(subscription)
         return "Subscription created", 201
     return ""
+
 
 if __name__ == "__main__":
     create_database()
