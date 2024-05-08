@@ -5,4 +5,3 @@ class Subscription:
         self.industry = lst[2]
         self.source = lst[3]
         self.subcategory = lst[4]
-        self.last_sent = lst[5]

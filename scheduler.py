@@ -2,6 +2,7 @@ from constants import seconds_in_a_day
 from database import get_subscriptions
 from logger import logger
 from send_newsletter import check_subscription_and_send_newsletter
+from subscription import Subscription
 from threading import Timer
 
 
@@ -13,7 +14,7 @@ class RepeatTimer(Timer):
                 break
 
 
-def start_schedule(subscription):
+def start_schedule(subscription: Subscription) -> None:
     try:
         RepeatTimer(seconds_in_a_day, check_subscription_and_send_newsletter, [
                     subscription]).start()
@@ -24,7 +25,7 @@ def start_schedule(subscription):
             subscription_number=subscription.subscription_number, e=e))
 
 
-def start_schedules():
+def start_schedules() -> None:
     subscriptions = get_subscriptions()
     for subscription in subscriptions:
         start_schedule(subscription)
