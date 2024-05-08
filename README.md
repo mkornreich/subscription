@@ -6,12 +6,13 @@ A simple API system that supports a subscription-based feature
 
 The program starts a local server on http://127.0.0.1:5000 which
 subscriptions can be sent via POST. The only required parameter is the
-email When a subscription is sent to the server it is loaded into a
-SQLite database. A newsletter is then sent to that email. A timer is
-also set to once run a day which checks if an email has been sent for
-that subscription within the past week and if a newsletter has not
-been sent to that subscription within the past week a new newsletter
-is sent. Only one subscription can be active per email. When a new
+email. Optional parameter are industry, source, and subcategory. When
+a subscription is sent to the server it is loaded into a SQLite
+database. A newsletter is then sent to that email. A timer is also set
+to once run a day which checks if an email has been sent for that
+subscription within the past week and if a newsletter has not been
+sent to that subscription within the past week a new newsletter is
+sent. Only one subscription can be active per email. When a new
 subscription is created for an email with an existing subscription the
 old subscription is overwritten is the database. Note that the actual
 logic to send the newsletter has not been implemented. Logs are logged
@@ -23,7 +24,7 @@ From a terminal
 
 1. Clone this project `git clone
    https://github.com/mkornreich/subscription.git` and cd into it
-   `cd amazon-scraper`
+   `cd subscription`
 2. Install Requirements `pip3 install -r requirements.txt`
 3. Run the server `python3 main.py`
 4. Run an examples command such as `curl -d
