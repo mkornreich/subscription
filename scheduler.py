@@ -28,4 +28,5 @@ def start_schedule(subscription: Subscription) -> None:
 def start_schedules() -> None:
     subscriptions = get_subscriptions()
     for subscription in subscriptions:
+        check_subscription_and_send_newsletter(subscription)
         start_schedule(subscription)

@@ -52,7 +52,7 @@ def get_subscription(email: str) -> Subscription:
         return Subscription(value)
     except Exception as e:
         log = "Failed to retrieve subscription for email {email} from database {filename}. Exception: {e}".format(
-            email=email, filename=filename, e = e)
+            email=email, filename=filename, e=e)
         logger.error(log)
         return None
 
@@ -69,7 +69,7 @@ def get_subscriptions() -> list[Subscription]:
         return subscriptions
     except Exception as e:
         log = "Failed to retrieve all subscriptions from database {filename}. Exception: {e}".format(
-            filename=filename, e = e)
+            filename=filename, e=e)
         logger.info(log)
         return None
 
@@ -88,7 +88,7 @@ def check_subscription_exists(subscription: Subscription) -> bool:
         return True if value else False
     except Exception as e:
         log = "Failed to check if subscription_number {subscription_number} exists in database {filename}. Exception: {e}".format(
-            subscription_number=subscription_number, filename=filename, e = e)
+            subscription_number=subscription_number, filename=filename, e=e)
         logger.error(log)
         return None
 
@@ -107,7 +107,7 @@ def update_timestamp_for_subscription(subscription: Subscription, current_timest
         logger.info(log)
     except Exception as e:
         log = "Failed to update timestamp for subscription_number {subscription_number} from database {filename}. Exception: {e}".format(
-            subscription_number=subscription_number, filename=filename, e = e)
+            subscription_number=subscription_number, filename=filename, e=e)
         logger.info(log)
 
 
@@ -124,5 +124,5 @@ def get_timestamp_for_subscription(subscription: Subscription) -> str:
         return last_sent
     except Exception as e:
         log = "Failed to retrieve last_sent for subscription_number {subscription_number} from database {filename}. Exception: {e}".format(
-            subscription_number=subscription.subscription_number, filename=filename, e = e)
+            subscription_number=subscription.subscription_number, filename=filename, e=e)
         return None

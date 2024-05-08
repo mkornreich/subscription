@@ -1,6 +1,7 @@
 from database import create_database, get_subscription, insert_email
 from flask import Flask, request
 from scheduler import start_schedule, start_schedules
+from send_newsletter import check_subscription_and_send_newsletter
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ def handle_post():
             return "Email not included in form", 400
         insert_email(**args)
         subscription = get_subscription(args["email"])
+        check_subscription_and_send_newsletter(subscription)
         start_schedule(subscription)
         return "Subscription created", 201
     return ""
