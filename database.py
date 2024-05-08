@@ -1,16 +1,17 @@
 from constants import database_filename as filename
 from logger import logger
-import sqlite3
+from sqlite3 import connect
+from subscription import Subscription
 
 
 def get_database():
-    return sqlite3.connect(filename)
+    return connect(filename)
 
 
 def create_database():
     try:
         cur = get_database().cursor()
-        command = "CREATE TABLE IF NOT EXISTS subscriptions(subscription_number INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE, industry TEXT DEFAULT '', source TEXT DEFAULT '', subcategory TEXT DEFAULT '', last_sent TEXT DEFAULT '')"
+        command = 'CREATE TABLE IF NOT EXISTS subscriptions(subscription_number INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT UNIQUE, industry TEXT DEFAULT "", source TEXT DEFAULT "", subcategory TEXT DEFAULT "", last_sent TEXT DEFAULT "")'
         cur.execute(command)
         log = "Opened database {filename}".format(filename=filename)
         logger.info(log)
@@ -39,7 +40,6 @@ def insert_email(email, industry="", source="", subcategory=""):
 
 def get_subscription(email):
     try:
-        value = None
         cur = get_database().cursor()
         command = 'SELECT subscription_number, email, industry, source, subcategory, last_sent FROM subscriptions WHERE email="{email}"'.format(
             email=email)
@@ -47,7 +47,7 @@ def get_subscription(email):
         log = "Successfully retrieved subscription for email {email} from database {filename}".format(
             email=email, filename=filename)
         logger.info(log)
-        return value
+        return Subscription(value)
     except Exception as e:
         log = "Failed to retrieve subscription for email {email} from database {filename}".format(
             email=email, filename=filename)
@@ -57,23 +57,24 @@ def get_subscription(email):
 
 def get_subscriptions():
     try:
-        value = None
         cur = get_database().cursor()
         command = 'SELECT subscription_number, email, industry, source, subcategory, last_sent FROM subscriptions'
-        value = cur.execute(command).fetchall()
+        values = cur.execute(command).fetchall()
         log = "Successfully retrieved all subscriptions from database {filename}".format(
             filename=filename)
         logger.info(log)
-        return value
+        subscriptions = [Subscription(n) for n in values]
+        return subscriptions
     except Exception as e:
         log = "Failed to retrieve all subscriptions from database {filename}".format(
-            database=filename)
+            filename=filename)
         logger.info(log)
         return None
 
 
-def check_subscription_number(subscription_number):
+def check_subscription_exists(subscription):
     try:
+        subscription_number = subscription.subscription_number
         value = None
         cur = get_database().cursor()
         command = 'SELECT subscription_number FROM subscriptions WHERE subscription_number = {subscription_number}'.format(
@@ -90,8 +91,9 @@ def check_subscription_number(subscription_number):
         return None
 
 
-def update_timestamp_for_subscription(subscription_number, current_timestamp):
+def update_timestamp_for_subscription(subscription, current_timestamp):
     try:
+        subscription_number = subscription.subscription_number
         cur = get_database().cursor()
         command = 'UPDATE subscriptions SET current_timestamp = {current_timestamp} WHERE subscription_number = {subscription_number}'.format(
             current_timestamp=current_timestamp, subscription_number=subscription_number)

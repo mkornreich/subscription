@@ -1,6 +1,5 @@
 from database import create_database, get_subscription, insert_email
 from flask import Flask, request
-from logger import logger
 from scheduler import start_schedule, start_schedules
 
 app = Flask(__name__)
@@ -23,4 +22,4 @@ def handle_post():
 if __name__ == "__main__":
     create_database()
     start_schedules()
-    app.run()
+    app.run(host="127.0.0.1", port=5000)

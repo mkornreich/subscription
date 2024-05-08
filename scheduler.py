@@ -15,13 +15,13 @@ class RepeatTimer(Timer):
 
 def start_schedule(subscription):
     try:
-        RepeatTimer(seconds_in_a_day, check_subscription_and_send_newsletter, list(
-            subscription)).start()
-        logger.info("Successfully scheduled a timer for subscription {subscription}".format(
-            subscription=subscription))
+        RepeatTimer(seconds_in_a_day, check_subscription_and_send_newsletter, [
+                    subscription]).start()
+        logger.info("Successfully scheduled a timer for subscription_number {subscription_number}".format(
+            subscription_number=subscription.subscription_number))
     except Exception as e:
-        logger.error("Failed to schedule a timer for subscription {subscription} Exception: {e}".format(
-            subscription=subscription, e=e))
+        logger.error("Failed to schedule a timer for subscription_number {subscription_number} Exception: {e}".format(
+            subscription_number=subscription.subscription_number, e=e))
 
 
 def start_schedules():
