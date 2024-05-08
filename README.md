@@ -1,6 +1,6 @@
-# API System that Supports a Subscription-Based Features
+# API System that Supports Subscription-Based Features
 
-A simple API system that supports a subscription-based feature
+A simple API system that supports subscription-based feature
 
 ## How it works
 
